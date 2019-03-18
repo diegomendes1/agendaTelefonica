@@ -2,5 +2,6 @@ module Agenda {
     requires javafx.fxml;
     requires javafx.controls;
 
-    opens sample;
+    opens com.diego.agenda.principal;
+    opens com.diego.agenda.ui;
 }
