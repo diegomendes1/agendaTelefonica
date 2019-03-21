@@ -3,13 +3,15 @@ package com.diego.agenda.principal;
 import java.util.ArrayList;
 
 public class Contato {
+    public int idBD;
     private String nome;
     private String numeroPrincipal;
     private ArrayList<String> numerosSecundarios;
     private String email;
     private String foto;
 
-    public Contato(String nome, String numeroPrincipal, ArrayList<String> numerosSecundarios, String email, String foto){
+    public Contato(int idBD, String nome, String numeroPrincipal, ArrayList<String> numerosSecundarios, String email, String foto){
+        this.idBD = idBD;
         this.nome = nome;
         this.numeroPrincipal = numeroPrincipal;
         this.numerosSecundarios = numerosSecundarios;
