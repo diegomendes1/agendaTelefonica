@@ -59,13 +59,53 @@ public class BancoDados {
 
     public static void adicionarContato(Contato contato){
         //Cria ou atualiza contato.
+        String comando = "INSERT INTO Contatos (idBD, Nome, NumeroPrincipal, OutrosNumeros, Email, Foto) VALUES(?,?,?,?,?,?)";
+
+        try{
+            PreparedStatement statement = conexao.prepareStatement(comando);
+            statement.setInt(1, contato.idBD);
+            statement.setString(2, contato.getNome());
+            statement.setString(3, contato.getNumeroPrincipal());
+            statement.setString(4, "");
+            statement.setString(5, contato.getEmail());
+            statement.setString(6, contato.getFoto());
+
+            statement.executeUpdate();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 
     public static void editarContato(Contato contato){
+        String comando = "UPDATE Contatos SET Nome=?, NumeroPrincipal=?, OutrosNumeros=?, Email=?, Foto=? where idBD=?";
 
+        try{
+            PreparedStatement pstmt = conexao.prepareStatement(comando);
+            pstmt.setString(1, contato.getNome());
+            pstmt.setString(2, contato.getNumeroPrincipal());
+            pstmt.setString(3, "");
+            pstmt.setString(4, contato.getEmail());
+            pstmt.setString(5, contato.getFoto());
+            pstmt.setInt(6, contato.idBD);
+
+            pstmt.executeUpdate();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 
     public static int gerarNovoIdBD(){
+        String comando = "SELECT COUNT(*) AS numContatos FROM Contatos";
+
+        try{
+            ResultSet rs = statement.executeQuery(comando);
+            rs.next();
+            int numContatos = rs.getInt("numContatos");
+
+            return numContatos+1;
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
         return 0;
     }
 

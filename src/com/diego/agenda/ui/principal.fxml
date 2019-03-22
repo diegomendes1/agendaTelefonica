@@ -114,7 +114,7 @@
       </AnchorPane>
     <AnchorPane fx:id="painelAdicionarContato" layoutX="273.0" layoutY="332.0" minHeight="0.0" minWidth="0.0" prefHeight="55.0" prefWidth="315.0">
          <children>
-            <Button layoutX="187.0" layoutY="12.0" mnemonicParsing="false" onAction="#concluirAdicionarBotao" prefHeight="31.0" prefWidth="114.0" text="Salvar" />
+            <Button fx:id="adicionarContatoBotao" layoutX="187.0" layoutY="12.0" mnemonicParsing="false" onAction="#concluirAdicionarBotao" prefHeight="31.0" prefWidth="114.0" text="Salvar" />
             <Button layoutX="14.0" layoutY="12.0" mnemonicParsing="false" onAction="#cancelarAdicionarBotao" prefHeight="31.0" prefWidth="114.0" text="Cancelar" />
          </children>
       </AnchorPane>

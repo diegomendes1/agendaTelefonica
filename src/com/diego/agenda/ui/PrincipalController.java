@@ -3,6 +3,8 @@ package com.diego.agenda.ui;
 import com.diego.agenda.principal.BancoDados;
 import com.diego.agenda.principal.Carta;
 import com.diego.agenda.principal.Contato;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -33,25 +35,22 @@ public class PrincipalController {
     @FXML
     public AnchorPane painelAdicionarContato;
     @FXML
+    public Button adicionarContatoBotao;
+    @FXML
     public AnchorPane painelEditarContato;
     @FXML
     public Button editarContatoBotao;
 
     @FXML
     public Button fotoContatoBotao;
-
     @FXML
     public ImageView fotoContato;
-
     @FXML
     public TextField nomeContato;
-
     @FXML
     public TextField numPrincipalContato;
-
     @FXML
     public TextField outrosNumerosContato;
-
     @FXML
     public TextField emailContato;
 
@@ -87,6 +86,13 @@ public class PrincipalController {
             novaFoto.setFitHeight(50);
 
             novoBotao.setGraphic(novaFoto);
+
+            novoBotao.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    mostrarContato(carta.idBD);
+                }
+            });
         }
     }
 
@@ -120,6 +126,7 @@ public class PrincipalController {
 
     @FXML
     public void adicionarContatoBotao(){
+        //adicionarContatoBotao.setDisable(true);
         limparFields();
         painelAdicionarContato.setVisible(true);
         liberarFields();
@@ -170,6 +177,7 @@ public class PrincipalController {
 
             BancoDados.editarContato(contatoAberto);
             mostrarContato(contatoAberto.idBD);
+            desenharTodasCartas();
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -208,6 +216,15 @@ public class PrincipalController {
         fotoContato.setImage(imgArquivo);
 
         //contatoAberto = null;
+    }
+
+    @FXML
+    public void checarNumeroCorreto(){
+        if(numPrincipalContato.getText().matches("\\d")){
+            adicionarContatoBotao.setDisable(false);
+        }else{
+            adicionarContatoBotao.setDisable(true);
+        }
     }
 
     @FXML
