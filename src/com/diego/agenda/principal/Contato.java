@@ -1,22 +1,18 @@
 package com.diego.agenda.principal;
 
-import java.util.ArrayList;
-
 public class Contato {
     public int idBD;
     private String nome;
     private String numeroPrincipal;
-    private ArrayList<String> numerosSecundarios;
+    private String numeroSecundario;
     private String email;
-    private String foto;
 
-    public Contato(int idBD, String nome, String numeroPrincipal, ArrayList<String> numerosSecundarios, String email, String foto){
+    public Contato(int idBD, String nome, String numeroPrincipal, String numeroSecundario, String email){
         this.idBD = idBD;
         this.nome = nome;
         this.numeroPrincipal = numeroPrincipal;
-        this.numerosSecundarios = numerosSecundarios;
+        this.numeroSecundario = numeroSecundario;
         this.email = email;
-        this.foto = foto;
     }
 
     public String getNome() {
@@ -35,12 +31,12 @@ public class Contato {
         this.numeroPrincipal = numeroPrincipal;
     }
 
-    public ArrayList<String> getNumerosSecundarios() {
-        return numerosSecundarios;
+    public String getNumeroSecundario() {
+        return numeroSecundario;
     }
 
-    public void setNumerosSecundarios(ArrayList<String> numerosSecundarios) {
-        this.numerosSecundarios = numerosSecundarios;
+    public void setNumeroSecundario(String numeroSecundario) {
+        this.numeroSecundario = numeroSecundario;
     }
 
     public String getEmail() {
@@ -49,13 +45,5 @@ public class Contato {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getFoto() {
-        return foto;
-    }
-
-    public void setFoto(String foto) {
-        this.foto = foto;
     }
 }
