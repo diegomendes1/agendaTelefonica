@@ -8,8 +8,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -32,6 +30,8 @@ public class PrincipalController {
     public AnchorPane painelEditarContato;
     @FXML
     public Button editarContatoBotao;
+    @FXML
+    public Button deletarContatoBotao;
 
     @FXML
     public TextField nomeContato;
@@ -42,14 +42,10 @@ public class PrincipalController {
     @FXML
     public TextField emailContato;
 
-    public PrincipalController(){
-
-    }
+    public PrincipalController(){}
 
     @FXML
     public void initialize(){
-
-
         mostrarContato(1); //Contato inicial
         desenharTodasCartas();
     }
@@ -61,7 +57,7 @@ public class PrincipalController {
         for(Carta carta : cartas){
             //Desenhar Carta
             Button novoBotao = new Button(carta.nomeCarta);
-            //novoBotao.setPrefHeight(60);
+            novoBotao.setMinHeight(60);
             novoBotao.setPrefWidth(230);
             novoBotao.setPrefHeight(60);
 
@@ -98,16 +94,22 @@ public class PrincipalController {
 
     @FXML
     public void adicionarContatoBotao(){
-        //adicionarContatoBotao.setDisable(true);
         limparFields();
         painelAdicionarContato.setVisible(true);
+        adicionarContatoBotao.setDisable(false);
         liberarFields();
     }
 
     @FXML
     public void concluirAdicionarBotao(){
         int novoIdBD = BancoDados.gerarNovoIdBD();
-        Contato contato = new Contato(novoIdBD, nomeContato.getText(), numPrincipalContato.getText(), null, emailContato.getText());
+        Contato contato = new Contato(novoIdBD, nomeContato.getText(),
+                numPrincipalContato.getText(), null, emailContato.getText());
+
+        if(outroNumeroContato.getText() == null)
+            contato.setNumeroSecundario("");
+        else
+            contato.setNumeroSecundario(outroNumeroContato.getText());
 
         BancoDados.adicionarContato(contato);
         mostrarContato(novoIdBD);
@@ -134,9 +136,13 @@ public class PrincipalController {
     public void concluirEditarBotao(){
         contatoAberto.setNome(nomeContato.getText());
         contatoAberto.setNumeroPrincipal(numPrincipalContato.getText());
-        contatoAberto.setNumeroSecundario(outroNumeroContato.getText());
-        contatoAberto.setEmail(emailContato.getText());
 
+        if(outroNumeroContato.getText() == null)
+            contatoAberto.setNumeroSecundario("");
+        else
+            contatoAberto.setNumeroSecundario(outroNumeroContato.getText());
+
+        contatoAberto.setEmail(emailContato.getText());
         BancoDados.editarContato(contatoAberto);
         mostrarContato(contatoAberto.idBD);
         desenharTodasCartas();
@@ -144,9 +150,9 @@ public class PrincipalController {
 
     public void travarFields(){
         editarContatoBotao.setVisible(true);
-
         painelEditarContato.setVisible(false);
         painelAdicionarContato.setVisible(false);
+        deletarContatoBotao.setVisible(true);
 
         nomeContato.setEditable(false);
         numPrincipalContato.setEditable(false);
@@ -156,6 +162,7 @@ public class PrincipalController {
 
     public void liberarFields(){
         editarContatoBotao.setVisible(false);
+        deletarContatoBotao.setVisible(false);
 
         nomeContato.setEditable(true);
         numPrincipalContato.setEditable(true);
@@ -171,11 +178,9 @@ public class PrincipalController {
     }
 
     @FXML
-    public void checarNumeroCorreto(){
-        if(numPrincipalContato.getText().matches("\\d")){
-            adicionarContatoBotao.setDisable(false);
-        }else{
-            adicionarContatoBotao.setDisable(true);
-        }
+    public void deletarContato(){
+        BancoDados.deletarContato(contatoAberto.idBD);
+        mostrarMeuContatoBotao();
+        desenharTodasCartas();
     }
 }
